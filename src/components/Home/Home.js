@@ -1,9 +1,12 @@
 import './Home.css';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Blog from '../Blog/Blog';
+import Modal from '../Modal/Modal';
+import { BlogContext } from '../../App';
 
 const Home = () => {
   const [blogs, setBlogs] = useState([]);
+  const [selectedBlog] = useContext(BlogContext);
 
   useEffect(() => {
     fetch(`https://my-json-server.typicode.com/Codeinwp/front-end-internship-api/posts`)
@@ -14,8 +17,9 @@ const Home = () => {
   return (
     <div className="Home">
       {
-        blogs.map(blogs => <Blog blog={blogs}/> )
+        blogs.map(blog => <Blog key={blog.id} blog={blog} />)
       }
+      <Modal blog={selectedBlog} />
     </div>
   );
 };
